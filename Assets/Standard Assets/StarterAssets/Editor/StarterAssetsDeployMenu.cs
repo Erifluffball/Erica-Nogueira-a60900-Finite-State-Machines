@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 #if STARTER_ASSETS_PACKAGES_CHECKED
-using Cinemachine;
+//using Cinemachine;
 #endif
 
 namespace StarterAssets
@@ -94,7 +94,7 @@ namespace StarterAssets
                 target.tag = CinemachineTargetTag;
                 Undo.RegisterCreatedObjectUndo(target, "Created new cinemachine target");
             }
-            CheckVirtualCameraFollowReference(target, _cinemachineVirtualCamera);
+            //CheckVirtualCameraFollowReference(target, _cinemachineVirtualCamera);
         }
 
         private static void CheckMainCamera(string prefabPath)
@@ -110,20 +110,20 @@ namespace StarterAssets
             else
             {
                 // make sure the found camera has a cinemachine brain (we only need 1)
-                if (!mainCameras[0].TryGetComponent(out CinemachineBrain cinemachineBrain))
-                    mainCameras[0].AddComponent<CinemachineBrain>();
+                //if (!mainCameras[0].TryGetComponent(out CinemachineBrain cinemachineBrain))
+                    //mainCameras[0].AddComponent<CinemachineBrain>();
             }
         }
 
-        private static void CheckVirtualCameraFollowReference(GameObject target,
-            GameObject cinemachineVirtualCamera)
-        {
-            var serializedObject =
-                new SerializedObject(cinemachineVirtualCamera.GetComponent<CinemachineVirtualCamera>());
-            var serializedProperty = serializedObject.FindProperty("m_Follow");
-            serializedProperty.objectReferenceValue = target.transform;
-            serializedObject.ApplyModifiedProperties();
-        }
+        //private static void CheckVirtualCameraFollowReference(GameObject target,
+           // GameObject cinemachineVirtualCamera)
+        //{
+            //var serializedObject =
+              //  new SerializedObject(cinemachineVirtualCamera.GetComponent<CinemachineVirtualCamera>());
+            //var serializedProperty = serializedObject.FindProperty("m_Follow");
+            //serializedProperty.objectReferenceValue = target.transform;
+           // serializedObject.ApplyModifiedProperties();
+       // }
 
         private static void HandleInstantiatingPrefab(string path, string prefabName, out GameObject prefab)
         {
