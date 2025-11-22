@@ -115,6 +115,7 @@ public class Patrol: State
 
     public override void Exit()
     {
+        anim.ResetTrigger("isIdle");
         base.Exit();
     }
 }
