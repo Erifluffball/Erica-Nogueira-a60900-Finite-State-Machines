@@ -56,6 +56,29 @@ public class State
         }
         return this; // If we're not returning the nextState, then return the same state.
     }
+
+    public bool CanSeePlayer()
+    {
+        Vector3 direction = player.position - npc.transform.position;
+        float angle = Vector3.Angle(direction, npc.transform.forward);
+
+        if (direction.magnitude < visDist && angle < visAngle)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool CanAttackPlayer()
+    {
+        Vector3 direction = player.position - npc.transform.position;
+        if (direction.magnitude < shootDist)
+        {
+            return true;
+        }
+        return false;
+    }
+
 }
 
 // Constructor for Idle state.
