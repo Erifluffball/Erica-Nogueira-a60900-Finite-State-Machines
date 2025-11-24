@@ -98,8 +98,14 @@ public class Idle : State
     }
     public override void Update()
     {
+        if (CanSeePlayer())
+        {
+            nextState = new Pursue(npc, agent, anim, player);
+            stage = EVENT.EXIT;
+        }
+
         // The only place where Update can break out of itself. Set chance of breaking out at 10%.
-        if (Random.Range(0,100) < 10)
+        else if (Random.Range(0,100) < 10)
         {
             nextState = new Patrol(npc, agent, anim, player);
             stage = EVENT.EXIT; // The next time 'Process' runs, the EXIT stage will run instead, which will then return the nextState.
@@ -144,6 +150,12 @@ public class Patrol : State
                 currentIndex++;
 
             agent.SetDestination(GameEnvironment.Singleton.Checkpoints[currentIndex].transform.position); // Set agents destination to position of next waypoint.
+        }
+
+        if (CanSeePlayer())
+        {
+            nextState = new Pursue(npc, agent, anim, player);
+            stage = EVENT.EXIT;
         }
     }
 
