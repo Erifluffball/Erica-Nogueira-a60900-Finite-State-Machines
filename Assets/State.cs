@@ -9,7 +9,7 @@ public class State
     // 'States' that the NPC could be in.
     public enum STATE
     {
-        IDLE, PATROL, PURSUE, ATTACK, SLEEP
+        IDLE, PATROL, PURSUE, ATTACK, SLEEP, RUNAWAY
     };
 
     // 'Events' - where we are in the running of a STATE.
@@ -64,6 +64,17 @@ public class State
         float angle = Vector3.Angle(direction, npc.transform.forward);
 
         if (direction.magnitude < visDist && angle < visAngle)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool IsPlayerBehind()
+    {
+        Vector3 direction = npc.transform.position - player.position;
+        float angle = Vector3.Angle(direction, npc.transform.forward);
+        if (direction.magnitude < 2 && angle < 30)
         {
             return true;
         }
@@ -165,6 +176,11 @@ public class Patrol : State
         if (CanSeePlayer())
         {
             nextState = new Pursue(npc, agent, anim, player);
+            stage = EVENT.EXIT;
+        }
+        else if (IsPlayerBehind())
+        {
+            nextState = new RunAway(npc, agent, anim, player);
             stage = EVENT.EXIT;
         }
     }
